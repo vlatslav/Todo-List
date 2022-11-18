@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center">
+  <div class="rounded boarder boarder-dark ">
+    <div>
+      <label>new item:</label>
+      <div class="row">
+        <div class="col-8">
+          <input #newGoal (keyup.enter)="addNewGoal(newGoal.value); newGoal.value=''"
+                 id="aim" type="text" placeholder="type text">
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-primary rounded addbutton" (click)="addNewGoal(newGoal.value); newGoal.value = ''">Add</button>
+        </div>
+      </div>
+      <div>
+          <p>current items:</p>
+          <div *ngIf="goals.length>0">
+            <p *ngFor="let goal of goals; let i = index;">
+              <u>{{i+1}}.
+                <input
+                  type="checkbox"
+                  [checked]="goal.isDone"
+                  (change)="setIsDone(goal.id,goal.isDone)"/>
+                <div *ngIf="goal.isDone; then content else elseBlock"></div>
+                <ng-template #content><del><span>{{goal.aim}}</span></del></ng-template>
+                <ng-template #elseBlock> {{goal.aim}}</ng-template>
+                <button (click)="deleteGoal(goal.id)" class="btn close"><i class="fa fa-close"></i></button>
+              </u>
+            </p>
+          </div>
+          <p *ngIf="goals.length == 0">There aren't goals</p>
+      </div>
+    </div>
+  </div>
+</div>
+
